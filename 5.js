@@ -24,7 +24,6 @@ function swap(arr, i, j) {
     arr[j] = temp
 }
 
-// 自己的垃圾代码
 // function heapFiy(arr, index, heapSize) {
 //     let leftChild = index * 2 + 1
 //     let rightChild = leftChild + 1
