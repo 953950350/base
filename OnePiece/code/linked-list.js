@@ -72,6 +72,108 @@ var reverseList = function(head) {
     return pre
 };
 
+// 合并两个有序链表
+var mergeTwoLists = function(l1, l2) {
+    if (!l1) return l2;
+    if (!l2) return l1;
+    let result = null
 
+    if (l1.val < l2.val) {
+        result = l1
+        l1 = l1.next;
+    } else {
+        result = l2
+        l2 = l2.next
+    }
+
+    let current = result
+    while(l1 && l2) {
+        if (l1.val < l2.val) {
+            current.next = l1
+            l1 = l1.next;
+        } else {
+            current.next = l2
+            l2 = l2.next
+        }
+        current = current.next
+    }
+    if (l1) {
+        current.next = l1
+    }
+    if (l2) {
+        current.next = l2
+    }
+    return result
+};
+
+// 19.移除链表倒数第n个节点
+var removeNthFromEnd = function(head, n) {
+    if (!head) return null
+    let fast = head
+    let i = n + 1
+    while (i && fast) {
+        i--
+        fast = fast.next
+    }
+    if (i) {
+        if (i === 1) {
+            head = head.next
+        }
+        return head
+    }
+    let slow = head
+    while (fast) {
+        fast = fast.next
+        slow = slow.next
+    }
+    if (slow.next) {
+        slow.next = slow.next.next
+    }
+    return head
+};
+
+// 876. 查找链表中点
+var middleNode = function(head) {
+    let slow = head
+    let fast = head
+    while (fast && fast.next) {
+        slow = slow.next
+        fast = fast.next.next
+    }
+    return slow
+};
+
+// 23. 合并k个排序数组
+var mergeKLists = function(lists) {
+    lists = lists.filter(item => !!item)
+    if (!lists.length) return null
+    let result = findMini(lists)
+    let current = result
+    while(lists.length > 1) {
+        current.next = findMini(lists)
+        current = current.next
+    }
+    if (lists.length) {
+        current.next = lists[0]
+    }
+    return result
+};
+
+function findMini(lists) {
+    let result = null
+    let index = 0
+    for(let i = 0; i < lists.length; i++) {
+        if (i === 0) result = lists[i]
+        if (lists[i].val < result.val) {
+            result = lists[i]
+            index = i
+        }
+    }
+    lists[index] = lists[index].next
+    if (!lists[index]) {
+        lists.splice(index, 1)
+    }
+    return result
+}
 
 // 206，141，21，19，876
